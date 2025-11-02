@@ -1,0 +1,29 @@
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - data_db:/data/db
+    restart: unless-stopped
+  backend:
+    image: doomerdpk/bytebrainbackend:latest
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=mongodb://mongo:27017/bytebrain_db
+      - JWT_SECRET="mP#6wXy8^Dz!1rT0&Fs@"
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  frontend:
+    image: doomerdpk/bytebrainfrontend:latest
+    ports:
+      - 5173:80
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  data_db:
