@@ -1,0 +1,46 @@
+db:
+  pvcname: db-pvc
+  pvstorage: 1Gi
+  dbdeploymentname: db-deployment
+  dbreplicas: 1
+  dbpodselector: db
+  dbcontainername: db
+  dbimage:
+    repository: mongo
+    tag: "latest"
+  dbvolumename: db-storage
+  dbmountpath: /data/db
+  dbservicename: db
+backend:
+  backendnamespace: backendnamespace
+  backendconfigmapname: backendconfigmap
+  backendsecretname: backendsecret
+  backenddeploymentname: backend-deployment
+  backendreplicas: 2
+  backendpodselector: backend
+  backendcontainername: backend
+  backendimage:
+    repository: doomerdpk/bytebrainbackend
+    tag: "latest"
+  backendsecretvolumename: env-file
+  backendsecretmountpath: /app/secrets
+  backendservicename: backend
+frontend:
+  frontendnamespace: frontendnamespace
+  frontenddeploymentname: frontend-deployment
+  frontendreplicas: 1
+  frontendpodselector: frontend
+  frontendcontainername: frontend
+  frontendimage:
+    repository: doomerdpk/bytebrainfrontend
+    tag: "latest"
+  frontendservicename: frontend
+ingress:
+  frontendingressname: frontendingress
+  backendingressname: backendingress
+  frontendingresshost: bytebrain.deepak.cfd
+  backendingresshost: bytebrain.api.deepak.cfd
+  frontendnamespace: frontendnamespace
+  frontendservicename: frontend
+  backendnamespace: backendnamespace
+  backendservicename: backend
